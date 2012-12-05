@@ -20,5 +20,5 @@ getElementCssRules(NodeList, getAllCssRules())
 * CSS code from list of CSS rules:
 
 <pre>
-convertCssRulesToCode( getElementCssRules(NodeList, getAllCssRules()) )
+convertCssRulesToCode( getElementCssRules(NodeList, getAllCssRules()), 4 )
 </pre>

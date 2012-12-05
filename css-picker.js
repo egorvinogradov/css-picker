@@ -2,10 +2,24 @@
  * @example
  *      All CSS rules of document: getAllCssRules()
  *      List of all CSS rules of elements from <NodeList>: getElementCssRules(<NodeList>, getAllCssRules())
- *      CSS code from list of CSS rules: convertCssRulesToCode( getElementCssRules(<NodeList>, getAllCssRules()) )
+ *      CSS code from list of CSS rules: convertCssRulesToCode( getElementCssRules(<NodeList>, getAllCssRules()), 4 )
  */
- 
- function toArray(list){
+
+/* Example. */
+/* Returns CSS of all child elements of <selector> */
+/*
+function _test(selector){
+    return convertCssRulesToCode(
+        getElementCssRules(
+            document.querySelectorAll(selector)[0].getElementsByTagName('*'),
+            getAllCssRules()
+        ), 4
+    );
+};
+*/
+
+
+function toArray(list){
     if ( list instanceof Array ) {
         return list;
     }
@@ -33,6 +47,14 @@ function isElementConformWithSelector(element, selector){
     return false;
 };
 
+function getIndent(indentValue){
+    var indentStr = '';
+    for ( var i = 0; i < indentValue; i++ ) {
+        indentStr += ' ';
+    }
+    return indentStr;
+};
+
 function getAllCssRules(){
     return toArray(document.styleSheets)
         .filter(function(styleSheet){
@@ -58,23 +80,11 @@ function getElementCssRules(elements, cssRules){
         });
 };
 
-function convertCssRulesToCode(cssRules){
+function convertCssRulesToCode(cssRules, settings){
     return toArray(cssRules).map(function(cssRule){
         return cssRule.cssText
-            .replace('{', '{\n  ')
+            .replace('{', '{\n') // TODO: don't forget CSS "content" property that may contain "{", "}" and ";"
             .replace('}', '\n}\n')
-            .replace(';', ';\n  '); // TODO: don't forget CSS "content" property that may contain "{", "}" and ";"
+            .replace(';', ';\n' + getIndent(settings.indent));
     }).join('\n');
 };
-
-/*
-// get CSS of all child elements of <selector>
-function _test(selector){
-    return convertCssRulesToCode(
-        getElementCssRules(
-            document.querySelectorAll(selector)[0].getElementsByTagName('*'),
-            getAllCssRules()
-        )
-    );
-};
-*/
