@@ -2,7 +2,7 @@
  * @example
  *      All CSS rules of document: getAllCssRules()
  *      List of all CSS rules of elements from <NodeList>: getElementCssRules(<NodeList>, getAllCssRules())
- *      CSS code from list of CSS rules: convertCssRulesToCode( getElementCssRules(<NodeList>, getAllCssRules()), 4 )
+ *      CSS code from list of CSS rules: convertCssRulesToCode( getElementCssRules(<NodeList>, getAllCssRules()) )
  */
 
 /* Example. */
@@ -13,7 +13,10 @@ function _test(selector){
         getElementCssRules(
             document.querySelectorAll(selector)[0].getElementsByTagName('*'),
             getAllCssRules()
-        ), 4
+        ), {
+            indent: 4,
+            linesUnder: 2
+        }
     );
 };
 */
@@ -47,13 +50,9 @@ function isElementConformWithSelector(element, selector){
     return false;
 };
 
-function getIndent(indentValue){
-    var indentStr = '';
-    for ( var i = 0; i < indentValue; i++ ) {
-        indentStr += ' ';
-    }
-    return indentStr;
-};
+function repeatString(str, count){
+    return new Array((count || 0) + 1).join(str);
+}
 
 function getAllCssRules(){
     return toArray(document.styleSheets)
@@ -85,6 +84,6 @@ function convertCssRulesToCode(cssRules, settings){
         return cssRule.cssText
             .replace('{', '{\n') // TODO: don't forget CSS "content" property that may contain "{", "}" and ";"
             .replace('}', '\n}\n')
-            .replace(';', ';\n' + getIndent(settings.indent));
-    }).join('\n');
+            .replace(';', ';\n' + repeatString(' ', settings.indent));
+    }).join(repeatString('\n', settings.linesUnder));
 };
