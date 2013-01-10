@@ -1,11 +1,24 @@
+css-picker
+=======================
+
+Picks CSS of specified elements.
+
 Example:
 
-* List of all CSS-rules of element:
+* All CSS rules of document:
+
 <pre>
-getElementCss( getElementCssRules(element, getAllCssRules()) )
+getAllCssRules()
 </pre>
-* One computed CSS rule that contains all CSS properties of element:
+
+* List of all CSS rules of elements from NodeList:
+
 <pre>
-computeStyle(getElementCssRules(element, getAllCssRules()))
+getElementCssRules(NodeList, getAllCssRules())
 </pre>
- 
+
+* CSS code from list of CSS rules:
+
+<pre>
+convertCssRulesToCode( getElementCssRules(NodeList, getAllCssRules()) )
+</pre>
