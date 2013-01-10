@@ -69,7 +69,7 @@ function keysToArray(obj){
 
 function classListToCss(classList){
     return classList.map(function(className){
-        return '.' + className + '{\n\n}\n\n';
+        return '.' + className + ' {\n\n}\n\n';
     }).join('');
 };
 
