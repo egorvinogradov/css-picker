@@ -48,3 +48,39 @@ function getCSS(parentElSelector){
         counter++;
     });
 };
+
+function removeDuplicates(classList){
+    var newClassList = {};
+    for ( var i = 0, l = classList.length; i < l; i++ ) {
+        if ( !newClassList[classList[i]] ) {
+            newClassList[classList[i]] = 1;
+        }
+    }
+    return keysToArray(newClassList);
+};
+
+function keysToArray(obj){
+    var arr = [];
+    for ( var key in obj ) {
+        arr.push(key);
+    }
+    return arr;
+};
+
+function classListToCss(classList){
+    return classList.map(function(className){
+        return '.' + className + '{\n\n}\n\n';
+    }).join('');
+};
+
+/*
+ * Example
+ * /
+
+classListToCss(
+    removeDuplicates(
+        getClassNames('body')
+    )
+);
+
+/* */
